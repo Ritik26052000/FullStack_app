@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" placeholder="email" id="email" /> <br />
+    <input type="text" placeholder="password" id="password" /> <br />
+    <button id="submit">login</button>
+  </body>
+</html>
+<script>
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const btn = document.getElementById("submit");
+
+  btn.addEventListener("click", () => {
+    console.log("btn is clicked");
+
+    fetch("/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+      }),
+    })
+      .then((d) => d.json())
+      .then((d) => {
+        localStorage.setItem("token", d.token);
+      })
+      .catch((err) => console.log(err));
+  });
+</script>

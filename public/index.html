@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" placeholder="username" id="username" /> <br />
+    <input type="text" placeholder="email" id="email" /> <br />
+    <input type="text" placeholder="password" id="password" /> <br />
+    <button id="submit">Signup</button>
+  </body>
+</html>
+<script>
+  const username = document.getElementById("username");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const btn = document.getElementById("submit");
+
+  btn.addEventListener("click", () => {
+    console.log("btn is clicked");
+
+    fetch("/user/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: username.value,
+        email: email.value,
+        password: password.value,
+      }),
+    })
+      .then((d) => d.json())
+      .then((d) => (window.location.href = "/login.html"))
+      .catch((err) => console.log(err));
+  });
+</script>
